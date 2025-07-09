@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Badge, Button, Card, Col, Container, Form, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import generateUniqueId from 'generate-unique-id';
 import ProductDetail from "./ProductDetail";
 
@@ -19,6 +19,7 @@ const Products = () => {
     }
     const [inputForm, setInputForm] = useState(intialState);
     const [productData, setProductData] = useState(getSotrageData());
+    const [isEdit, setIsEdit] = useState(false)
 
     const handleChanged = (e) => {
         const {name, value} = e.target;
@@ -30,15 +31,42 @@ const Products = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // let id = Math.floor(Math.random() * 100000)
-        let id = generateUniqueId({
-          length: 6,
-          useLetters: false
-        });
-        inputForm.id = id
-        // console.log("Submitted : => ", inputForm);
-        setProductData([...productData, inputForm]);
+        if(isEdit){
+         let updateData =  productData.map(product => {
+            if(product.id == inputForm.id){
+              return inputForm
+            }else{
+              return product
+            }
+          })
+
+          setProductData(updateData);
+          setIsEdit(false);
+        }else{
+          // let id = Math.floor(Math.random() * 100000)
+          let id = generateUniqueId({
+            length: 6,
+            useLetters: false
+          });
+          inputForm.id = id
+          // console.log("Submitted : => ", inputForm);
+          setProductData([...productData, inputForm]);
+        }
         setInputForm(intialState);
+    }
+
+    const handleDelete = (id) => {
+      // console.log(id);
+      let updatedData = productData.filter(product => product.id != id)
+      // console.log("After Delete: ",updatedData);
+      setProductData(updatedData);
+    }
+    
+    const handleEdit = (id) => {
+      let signleRec = productData.find(product => product.id == id)
+      // console.log(signleRec);
+      setInputForm(signleRec);
+      setIsEdit(true);
     }
 
     useEffect(()=> {
@@ -48,7 +76,7 @@ const Products = () => {
   return (
     <>
       <Container>
-        <h1>Add Product</h1>
+        <h1>{isEdit ? "Edit" : "Add"} Product</h1>
         <Form onSubmit={handleSubmit}>
           <Form.Group as={Row} className="mb-3" >
             <Form.Label column sm="2">
@@ -84,10 +112,10 @@ const Products = () => {
             <Col sm="6">
               <Form.Select aria-label="Default select example" name="category" onChange={handleChanged}>
                     <option>Select Category</option>
-                    <option value="Electronics">Electronics</option>
-                    <option value="Fashion">Fashion</option>
-                    <option value="Mobiles">Mobiles</option>
-                    <option value="Appliances">Appliances</option>
+                    <option value="Electronics" selected={inputForm.category == "Electronics"}>Electronics</option>
+                    <option value="Fashion" selected={inputForm.category == "Fashion"}>Fashion</option>
+                    <option value="Mobiles" selected={inputForm.category == "Mobiles"}>Mobiles</option>
+                    <option value="Home Appliances" selected={inputForm.category == "Home Appliances"}>Home Appliances</option>
                 </Form.Select>
             </Col>
           </Form.Group>
@@ -101,15 +129,16 @@ const Products = () => {
             </Col>
           </Form.Group>
 
-            <Button type="submit">Add Product</Button>
+            <Button type="submit">{isEdit ? "Update" : "Add"} Product</Button>
         </Form>
       </Container>
+      <hr />
       <Container>
         <h1>View Data</h1>
         <div className="d-flex">
           {
           productData.map(product => (
-            <ProductDetail product={product} />
+            <ProductDetail key={product.id} product={product} handleDelete={handleDelete} handleEdit={handleEdit} />
           ))
         }
         </div>
