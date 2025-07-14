@@ -34,7 +34,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Counter name="Jolly Peter" email="jolly@test.in" />} />
-        <Route path="/about" element={<Events />} />
+        <Route path="/about/:name" element={<Events />} />
         <Route path="/contact"  element={<h1>Contact Page</h1>}/>
         <Route path="/service" element={<h1>Service Page</h1>} />
         <Route path="/*" element={<h1>Page Not Found</h1>} />

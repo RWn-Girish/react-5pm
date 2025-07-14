@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useParams } from "react-router";
 
 const Events = () => {
+  const { name } = useParams()
+
   const [count, setCount] = useState(0);
   const handleClick = (name) => {
     console.log("Click Here...  => ", name);
@@ -23,7 +26,7 @@ const Events = () => {
         onMouseEnter={() => handleMouseEnter()}
         onMouseLeave={handleMouseLeave}
       >
-        On Mouse Over and Leave Event
+        On Mouse Over and Leave Event  {name}
       </h2>
       {count > 0 ? (
         <ul>
