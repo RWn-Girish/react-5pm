@@ -1,0 +1,15 @@
+import { useContext } from "react";
+import { userContext } from "./CompA";
+
+const CompD = () => {
+    const {user}  = useContext(userContext)
+    return (
+        <>
+            <h1>Component D</h1>
+            <li>Age:{user.age} </li>
+        </>
+        
+    )
+};
+
+export default CompD;
