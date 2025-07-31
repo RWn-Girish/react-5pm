@@ -7,6 +7,11 @@ const initalState = {
 
 export const productReducer = (state = initalState, action) => {
     switch(action.type){
+        case "LOADING": 
+        return {
+            ...state,
+            isLoading: true
+        }
         case "ADD_PRODUCT":
             let allData = JSON.parse(localStorage.getItem("products")) || [];
             allData.push(action.payload);
@@ -20,7 +25,8 @@ export const productReducer = (state = initalState, action) => {
             let prods = JSON.parse(localStorage.getItem("products")) || [];
             return {
                 ...state,
-                products: prods
+                products: prods,
+                isLoading: false
             }
         case "DELETE_PRODUCT":
             let alldata = JSON.parse(localStorage.getItem("products")) || [];
