@@ -1,0 +1,36 @@
+{
+  "products": [
+    {
+      "id": "242217",
+      "title": "abc",
+      "desc": "abc",
+      "price": "1200",
+      "category": "Electronics",
+      "image": "https://media-ik.croma.com/prod/https://media.croma.com/image/upload/v1712052017/Croma%20Assets/Communication/Mobiles/Images/193178_0_ghmlfa.png"
+    },
+    {
+      "id": "569847",
+      "title": "abcabc",
+      "desc": "acc",
+      "price": "120",
+      "category": "Mobiles",
+      "image": "https://media-ik.croma.com/prod/https://media.croma.com/image/upload/v1712052017/Croma%20Assets/Communication/Mobiles/Images/193178_0_ghmlfa.png"
+    },
+    {
+      "id": "997738",
+      "title": "bbb",
+      "desc": "bbb",
+      "price": "342",
+      "category": "Fashion",
+      "image": "https://media-ik.croma.com/prod/https://media.croma.com/image/upload/v1712052017/Croma%20Assets/Communication/Mobiles/Images/193178_0_ghmlfa.png"
+    },
+    {
+      "id": "966763",
+      "title": "zzzz",
+      "desc": "zzzz",
+      "price": "120",
+      "category": "Appliances",
+      "image": "https://www.shopghumakkad.com/cdn/shop/files/ghumakkad-beige-plain-tshirt-1.jpg?v=1747130805&width=1080"
+    }
+  ]
+}
