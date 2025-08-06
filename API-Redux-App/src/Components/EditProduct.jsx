@@ -2,13 +2,13 @@ import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { getProduct, updateProduct } from "../Services/Actions/productAction";
+import { getProductAsync, updateProductAsync } from "../Services/Actions/productAction";
 
 const EditProduct = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { product } = useSelector((state) => state.productReducer);
+  const { product, isUpdated } = useSelector((state) => state.productReducer);
   const intialState = {
     id: "",
     title: "",
@@ -29,10 +29,15 @@ const EditProduct = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateProduct(inputForm));
-    navigate("/");
+    dispatch(updateProductAsync(inputForm));
   };
   
+  useEffect(()=> {
+    if(isUpdated){
+        navigate("/");
+    }
+  },[isUpdated]);
+
   useEffect(()=> {
     if(product){
         setInputForm(product)
@@ -41,7 +46,7 @@ const EditProduct = () => {
 
   useEffect(() => {
     if (id) {
-      dispatch(getProduct(id));
+      dispatch(getProductAsync(id));
     }
   }, [id]);
   return (
