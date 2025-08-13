@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { addDoc, collection, doc, getDocs, setDoc } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebaseConfig';
 
 export const loading = () => {
@@ -57,8 +57,7 @@ export const updateProduct = () => {
 export const getAllProductAsync = () => {
     return async(dispatch) => {
         dispatch(loading());
-        try {
-            // let res = await axios.get('http://localhost:3000/products') 
+        try { 
             let result = [];
             let resRef = await getDocs(collection(db, 'products'));
             resRef.forEach((doc) => {
@@ -95,8 +94,7 @@ export const deleteProductAsync = (id) => {
     return async(dispatch) => {
         dispatch(loading());
         try {
-            let res = await axios.delete(`http://localhost:3000/products/${id}`) 
-            // console.log(res);
+            await deleteDoc(doc(db, "products", id));
             dispatch(getAllProductAsync());
         } catch (error) {
             console.log(error);
@@ -110,9 +108,9 @@ export const getProductAsync = (id) => {
     return async(dispatch) => {
         dispatch(loading());
         try {
-            let res = await axios.get(`http://localhost:3000/products/${id}`) 
-            // console.log(res);
-            dispatch(getProduct(res.data));
+            let res = await getDoc(doc(db, "products", id));
+            console.log(res);
+            dispatch(getProduct({...res.data(), id: res.id}));
         } catch (error) {
             console.log(error);
             dispatch(addProductRej(error.message))
@@ -125,7 +123,7 @@ export const updateProductAsync = (data) => {
     return async(dispatch) => {
         dispatch(loading());
         try {
-            let res = await axios.put(`http://localhost:3000/products/${data.id}`, data) 
+            await updateDoc(doc(db, "products", data.id), data)
             // console.log(res);
             dispatch(updateProduct());
         } catch (error) {
