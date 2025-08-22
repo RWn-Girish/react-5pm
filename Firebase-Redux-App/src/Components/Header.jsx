@@ -13,7 +13,7 @@ const Header = () => {
     <>
       <Navbar className="bg-body-tertiary">
         <Container>
-          <Navbar.Brand href="/">FlipKart</Navbar.Brand>
+          <Navbar.Brand href="/">FlipKart_Clone</Navbar.Brand>
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-center">
             <Navbar.Text>
